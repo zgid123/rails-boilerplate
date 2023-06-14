@@ -10,7 +10,8 @@ Boilerplate for Ruby on Rails using Modular architecture.
   ├── config
   ├── lib
   └── packages
-      └── core
+      ├── core
+      └── auth
 ```
 
 - apps: like the normal rails app
@@ -19,6 +20,7 @@ Boilerplate for Ruby on Rails using Modular architecture.
 - lib: like normal rails app
 - packages
   - core: contains all services/jobs/... for main app and plugins
+  - auth: contains all services/jobs/... for authentication and/or authorization
 
 # Commands
 

@@ -18,3 +18,9 @@
 **/config/credentials/staging.key
 **/config/credentials/development.key
 **/config/credentials/test.key
+
+# remove below for your project
+
+/db/migrate/*
+/db/seed/*
+/db/schema.rb

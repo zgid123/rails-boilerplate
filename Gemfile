@@ -38,3 +38,4 @@ gem 'pg'
 # plugins
 
 gem 'core', path: 'packages/core'
+gem 'auth', path: 'packages/auth'
