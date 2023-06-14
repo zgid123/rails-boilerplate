@@ -8,13 +8,17 @@ Boilerplate for Ruby on Rails using Modular architecture.
   ├── apps
   ├── db
   ├── config
-  └── lib
+  ├── lib
+  └── packages
+      └── core
 ```
 
 - apps: like the normal rails app
 - db: contains migrations and seeds from main app and other plugins
 - config: like normal rails app
 - lib: like normal rails app
+- packages
+  - core: contains all services/jobs/... for main app and plugins
 
 # Commands
 

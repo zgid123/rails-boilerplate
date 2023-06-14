@@ -34,3 +34,7 @@ gem 'rack-cors'
 
 gem 'rails_seeds'
 gem 'pg'
+
+# plugins
+
+gem 'core', path: 'packages/core'
