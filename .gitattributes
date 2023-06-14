@@ -1,0 +1,5 @@
+# See https://git-scm.com/docs/gitattributes for more about git attribute files.
+
+db/schema.rb linguist-generated
+
+vendor/* linguist-vendored
