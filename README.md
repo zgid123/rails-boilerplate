@@ -1,6 +1,6 @@
 # Introduce
 
-Boilerplate for Ruby on Rails using Modular architecture.
+Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspaces to handle monorepo for JavaScript/TypeScript inside Rails app managed by `Vite`.
 
 # Project Structure
 
@@ -21,6 +21,14 @@ Boilerplate for Ruby on Rails using Modular architecture.
 - packages
   - core: contains all services/jobs/... for main app and plugins
   - auth: contains all services/jobs/... for authentication and/or authorization
+
+# Run project
+
+- Start `vite` server for plugin before running `rails s`
+
+```sh
+pnpm --filter=<plugin package name> dev
+```
 
 # Commands
 
@@ -48,3 +56,5 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 [ ] Write cli or rake task to create plugin to `packages` folder instead of passing prefix
 [ ] Write cli to create migration for package instead of accessing and running rails migration
+[ ] Write generator for tailwindcss and windicss with `vite_rails`
+[ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`

@@ -1,0 +1,25 @@
+<section class='flex flex-col w-[100%] h-[100%] items-center justify-center'>
+  <div class='shadow-lg bg-white rounded-lg py-8 px-20'>
+    <%= form_for(resource, as: resource_name, url: auth_session_path, html: { class: 'space-y-5' }) do |f| %>
+      <div class='field'>
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: 'email' %>
+      </div>
+      <div class='field'>
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: 'current-password' %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class='field'>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+      <div class='actions flex justify-center'>
+        <button class='bg-cyan-500 text-white px-4 py-2 rounded-lg' type='submit'>
+          Sign in
+        </button>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -18,6 +18,8 @@
 **/config/credentials/staging.key
 **/config/credentials/development.key
 **/config/credentials/test.key
+node_modules
+**/public/*-vite
 
 # remove below for your project
 

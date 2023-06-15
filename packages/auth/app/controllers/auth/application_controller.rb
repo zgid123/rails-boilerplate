@@ -2,5 +2,6 @@
 
 module Auth
   class ApplicationController < ActionController::Base
+    layout 'auth/application'
   end
 end

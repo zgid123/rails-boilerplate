@@ -19,4 +19,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'devise'
   spec.add_dependency 'devise-jwt'
   spec.add_dependency 'rails', '>= 7.0.4.3'
+  spec.add_dependency 'vite_rails'
 end
