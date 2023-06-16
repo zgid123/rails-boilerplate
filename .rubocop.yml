@@ -415,6 +415,15 @@ Style/LambdaCall:
 Style/IdenticalConditionalBranches:
   Enabled: true
 
+Style/RedundantArrayConstructor:
+  Enabled: true
+
+Style/RedundantFilterChain:
+  Enabled: true
+
+Style/RedundantRegexpConstructor:
+  Enabled: true
+
 # Rails - rubocop-rails
 
 Rails/UnknownEnv:

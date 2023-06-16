@@ -27,6 +27,14 @@ module Helper
   def ruby_version
     @ruby_version ||= Gem::Version.new(RUBY_VERSION).to_s
   end
+
+  def gemfile_pathname
+    @gemfile_pathname = Rails.root.join('Gemfile')
+  end
+
+  def package_gem_import
+    @package_gem_import = "gem '#{package_name}', path: 'packages/#{package_name}'"
+  end
 end
 
 class PackageGenerator < Rails::Generators::Base
@@ -50,6 +58,9 @@ class PackageGenerator < Rails::Generators::Base
     FILES.each do |file|
       template(file, "packages/#{package_name}/#{file.gsub('.tt', '')}")
     end
+
+    gemfile_pathname.write("\n#{package_gem_import}\n", mode: 'a')
+    system("bundle exec rubocop -a #{gemfile_pathname}")
   end
 
   def clean_package
@@ -63,5 +74,8 @@ class PackageGenerator < Rails::Generators::Base
 
     directory(dir_path) # for notification
     FileUtils.remove_dir(dir_path) # remove empty folder
+    content = gemfile_pathname.read
+    Rails.root.join('Gemfile').write(content.gsub(package_gem_import, ''))
+    system("bundle exec rubocop -a #{Rails.root.join('Gemfile')}")
   end
 end
