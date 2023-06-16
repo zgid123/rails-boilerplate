@@ -1,41 +1,6 @@
 # frozen_string_literal: true
 
-module Helper
-  include ActiveSupport::Concern
-
-  def package_name
-    @package_name ||= behavior == :invoke ? ARGV.first : ARGV.second
-  end
-
-  def camelized_package
-    @camelized_package ||= package_name.camelize
-  end
-
-  def rails_prerelease?
-    @rails_prerelease ||= options.dev? || options.edge? || options.main?
-  end
-
-  def rails_version_specifier(gem_version = Rails.gem_version)
-    if gem_version.segments.size == 3 || gem_version.release.segments.size == 3
-      "~> #{gem_version}"
-    else
-      patch = gem_version.segments[0, 3].join('.')
-      ["~> #{patch}", ">= #{gem_version}"]
-    end
-  end
-
-  def ruby_version
-    @ruby_version ||= Gem::Version.new(RUBY_VERSION).to_s
-  end
-
-  def gemfile_pathname
-    @gemfile_pathname = Rails.root.join('Gemfile')
-  end
-
-  def package_gem_import
-    @package_gem_import = "gem '#{package_name}', path: 'packages/#{package_name}'"
-  end
-end
+require_relative './helper'
 
 class PackageGenerator < Rails::Generators::Base
   include Helper
@@ -60,7 +25,7 @@ class PackageGenerator < Rails::Generators::Base
     end
 
     gemfile_pathname.write("\n#{package_gem_import}\n", mode: 'a')
-    system("bundle exec rubocop -a #{gemfile_pathname}")
+    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
   end
 
   def clean_package
@@ -75,7 +40,7 @@ class PackageGenerator < Rails::Generators::Base
     directory(dir_path) # for notification
     FileUtils.remove_dir(dir_path) # remove empty folder
     content = gemfile_pathname.read
-    Rails.root.join('Gemfile').write(content.gsub(package_gem_import, ''))
-    system("bundle exec rubocop -a #{Rails.root.join('Gemfile')}")
+    gemfile_pathname.write(content.gsub(package_gem_import, ''))
+    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
   end
 end

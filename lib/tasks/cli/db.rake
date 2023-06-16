@@ -4,13 +4,17 @@ namespace :cli do
   namespace :db do
     desc 'Migrate the database with all plugins\' migrations'
     task migrate: :environment do
-      package_dir = Rails.root.join('packages')
+      require 'package_helper'
 
-      packages = Dir.entries(package_dir).select do |folder|
-        File.directory?("#{package_dir}/#{folder}") && ['.', '..'].exclude?(folder)
+      include PackageHelper
+
+      rake_task_names = package_folders.each_with_object([]) do |package, result|
+        next result unless Rake::Task.task_defined?("#{package}:install:migrations")
+
+        result << "#{package}:install:migrations"
       end
 
-      multitask all: packages.map { |package| "#{package}:install:migrations" }
+      multitask all: rake_task_names
 
       Rake::MultiTask[:all].invoke
 
