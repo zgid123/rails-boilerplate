@@ -1,0 +1,8 @@
+Description:
+  Add vite config for rails app
+
+Example:
+  bin/rails generate vite core -p
+
+  This will create:
+    packages/core/*

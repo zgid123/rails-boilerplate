@@ -52,6 +52,22 @@ rails d package <package_name>
 
 **Notice**: this will remove your folder entirely
 
+- Add vite for app
+
+```sh
+# multiple packages
+
+rails g vite --packages=package_1 package_2 ...
+
+# one package
+
+rails g vite package_1
+
+# root app
+
+rails g vite --root
+```
+
 # Env
 
 - If you wanna use credentials, use this command to edit

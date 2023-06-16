@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rails boilerplate</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= vite_client_tag %>
+    <%= vite_stylesheet_tag 'styles.scss' %>
+    <%= vite_typescript_tag 'application', media: 'all' %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

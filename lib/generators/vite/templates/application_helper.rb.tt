@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module <%= camelized_package %>
+  module ApplicationHelper
+    def vite_manifest
+      <%= camelized_package %>::Engine.vite_ruby.manifest
+    end
+  end
+end

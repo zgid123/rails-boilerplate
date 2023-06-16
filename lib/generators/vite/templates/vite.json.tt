@@ -1,0 +1,14 @@
+{
+  "all": {
+    "sourceCodeDir": "app/frontend",
+    "publicOutputDir": "auth-vite",
+    "watchAdditionalPaths": []
+  },
+  "development": {
+    "autoBuild": true,
+    "port": <%= next_port %>
+  },
+  "test": {
+    "autoBuild": true
+  }
+}
