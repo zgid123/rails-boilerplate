@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+require_relative 'lib/<%= package_name %>/version'
+
+Gem::Specification.new do |spec|
+  spec.name                               = '<%= package_name %>'
+  spec.version                            = <%= camelized_package %>::VERSION
+  spec.authors                            = ['Dương Tấn Huỳnh Phong']
+  spec.email                              = ['alphanolucifer@gmail.com']
+  spec.summary                            = '<%= camelized_package %> package for rails app'
+  spec.description                        = '<%= camelized_package %> package for rails app'
+  spec.required_ruby_version              = '~> <%= ruby_version %>'
+  spec.metadata['rubygems_mfa_required']  = 'true'
+
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
+  end
+
+  <%= "# " if rails_prerelease? -%>spec.add_dependency 'rails', '<%= Array(rails_version_specifier).join("', '") %>'
+end

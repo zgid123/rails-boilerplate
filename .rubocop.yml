@@ -193,6 +193,10 @@ Naming/MemoizedInstanceVariableName:
 Naming/BlockForwarding:
   Enabled: true
 
+Naming/FileName:
+  Exclude:
+    - "**/*.tt"
+
 # Security
 
 Security/IoMethods:

@@ -1,0 +1,8 @@
+Description:
+  Generate this boilerplate package
+
+Example:
+  bin/rails generate package thing
+
+  This will create:
+    packages/thing/*

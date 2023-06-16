@@ -38,11 +38,19 @@ pnpm --filter=<plugin package name> dev
 rake cli:db:migrate
 ```
 
-- Create plugin
+- Create package
 
 ```sh
-rails plugin new packages/<plugin_name> --mountable
+rails g package <package_name>
 ```
+
+- Remove package
+
+```sh
+rails d package <package_name>
+```
+
+**Notice**: this will remove your folder entirely
 
 # Env
 
@@ -54,7 +62,8 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 # TODO
 
-[ ] Write cli or rake task to create plugin to `packages` folder instead of passing prefix
 [ ] Write cli to create migration for package instead of accessing and running rails migration
+
 [ ] Write generator for tailwindcss and windicss with `vite_rails`
+
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`
