@@ -16,6 +16,7 @@ end
 group :development do
   gem 'bullet'
   gem 'letter_opener'
+  gem 'lefthook'
 end
 
 group :test do

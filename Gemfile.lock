@@ -132,6 +132,7 @@ GEM
     jwt (2.7.1)
     launchy (2.5.2)
       addressable (~> 2.8)
+    lefthook (1.4.2)
     letter_opener (1.8.1)
       launchy (>= 2.2, < 3)
     loofah (2.21.3)
@@ -295,6 +296,7 @@ DEPENDENCIES
   bullet
   byebug
   core!
+  lefthook
   letter_opener
   pg
   puma
