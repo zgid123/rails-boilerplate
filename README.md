@@ -30,6 +30,12 @@ Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspace
 pnpm --filter=<plugin package name> dev
 ```
 
+- Start all plugin's `vite` server
+
+```sh
+pnpm -w dev
+```
+
 # Commands
 
 - Run all migrations from main app and all plugins
