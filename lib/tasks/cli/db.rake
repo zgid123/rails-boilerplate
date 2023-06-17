@@ -4,7 +4,7 @@ namespace :cli do
   namespace :db do
     desc 'Migrate the database with all plugins\' migrations'
     task migrate: :environment do
-      require 'package_helper'
+      require 'generator_helpers/package_helper'
 
       include PackageHelper
 

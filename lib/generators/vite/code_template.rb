@@ -44,4 +44,8 @@ module CodeTemplate
       <%= vite_typescript_tag 'application', media: 'all' %>
     "
   end
+
+  def require_vite_rails
+    "require 'vite_rails'"
+  end
 end

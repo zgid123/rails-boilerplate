@@ -166,6 +166,7 @@ Metrics/MethodLength:
 
 Metrics/ParameterLists:
   Enabled: true
+  Max: 7
 
 Metrics/PerceivedComplexity:
   Enabled: false

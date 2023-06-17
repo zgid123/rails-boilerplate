@@ -1,46 +1,37 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/file_helper'
+require 'generator_helpers/content_helper'
+require 'generator_helpers/package_helper'
 require_relative './helper'
+require_relative './constant'
 
 class PackageGenerator < Rails::Generators::Base
   include Helper
+  include Constant
+  include FileHelper
+  include ContentHelper
+  include PackageHelper
 
   source_root File.expand_path('templates', __dir__)
 
-  FILES = %w[
-    %package_name%.gemspec.tt
-    Rakefile.tt
-    Gemfile.tt
-    lib/%package_name%.rb.tt
-    lib/%package_name%/engine.rb.tt
-    lib/%package_name%/version.rb.tt
-    bin/rails.tt
-  ].freeze
-
   def create_package
-    return if behavior == :revoke
+    return if revoke_action?
 
-    FILES.each do |file|
-      template(file, "packages/#{package_name}/#{file.gsub('.tt', '')}")
-    end
-
-    gemfile_pathname.write("\n#{package_gem_import}\n", mode: 'a')
-    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
+    copy_tt_files(FILES, path: package_dir)
+    insert_at_end_of_file(file: gemfile_pathname, content: package_gem_import)
+    format_gemfile
   end
 
   def clean_package
-    return if behavior == :invoke
+    return if invoke_action?
 
     return unless yes?("Are you sure you want to delete the #{package_name} package? (Y/N)")
+    return unless package_exist?(package_name)
 
-    dir_path = Rails.root.join("packages/#{package_name}")
-
-    return unless Dir.exist?(dir_path)
-
-    directory(dir_path) # for notification
-    FileUtils.remove_dir(dir_path) # remove empty folder
-    content = gemfile_pathname.read
-    gemfile_pathname.write(content.gsub(package_gem_import, ''))
-    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
+    directory(package_dir) # for notification
+    FileUtils.remove_dir(package_dir) # remove empty folder
+    clean_content(file: gemfile_pathname, content: package_gem_import)
+    format_gemfile
   end
 end

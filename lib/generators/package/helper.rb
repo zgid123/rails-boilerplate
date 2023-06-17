@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/env_helper'
+
 module Helper
   include ActiveSupport::Concern
+  include EnvHelper
 
   def package_name
-    @package_name ||= behavior == :invoke ? ARGV.first : ARGV.second
+    @package_name ||= extract_argv(support: :single_arg)
   end
 
   def camelized_package
@@ -34,5 +37,13 @@ module Helper
 
   def package_gem_import
     @package_gem_import = "gem '#{package_name}', path: 'packages/#{package_name}'"
+  end
+
+  def package_dir
+    @package_dir ||= Rails.root.join("packages/#{package_name}")
+  end
+
+  def format_gemfile
+    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
   end
 end
