@@ -164,6 +164,7 @@ module Helper
     packages = options[:packages].presence
 
     return [] if packages.blank? && options[:root].present?
+    return packages if packages.present?
 
     if behavior == :invoke
       [ARGV.first]

@@ -31,4 +31,14 @@ module PackageHelper
 
     cache_file.write(ports.to_json)
   end
+
+  def package_exist?(package)
+    Dir.exist?("packages/#{package}")
+  end
+
+  def copy_tt_files(files, path:)
+    files.each do |file|
+      template(file, "#{path}/#{file.gsub('.tt', '')}")
+    end
+  end
 end

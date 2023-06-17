@@ -1,0 +1,5 @@
+Description:
+  Integrate tailwind to Rails app
+
+Example:
+  bin/rails generate tailwind
