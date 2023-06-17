@@ -109,6 +109,21 @@ module Helper
     cache_file.write(content.to_json)
   end
 
+  def clean_cache_port(vite_json_path)
+    cache_file = Rails.root.join('tmp/vite_ports_cache.json')
+
+    return if !cache_file.exist? || !File.exist?(vite_json_path)
+
+    content = JSON.parse(cache_file.read)
+    vite_content = JSON.parse(File.read(vite_json_path))
+
+    cache_file.write(
+      content.except(
+        (vite_content['development'].try(:[], 'port').presence || '3036').to_s
+      ).to_json
+    )
+  end
+
   def clean_content(file, content)
     return unless File.exist?(file)
 
@@ -146,10 +161,14 @@ module Helper
   end
 
   def extract_argv
-    options[:packages].presence || if behavior == :invoke
-                                     [ARGV.first]
-                                   else
-                                     [ARGV.second]
-                                   end
+    packages = options[:packages].presence
+
+    return [] if packages.blank? && options[:root].present?
+
+    if behavior == :invoke
+      [ARGV.first]
+    else
+      [ARGV.second]
+    end
   end
 end

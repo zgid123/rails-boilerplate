@@ -19,14 +19,18 @@ class ViteGenerator < Rails::Generators::Base
                type: :string,
                desc: 'Integrate vite into root'
 
+  ROOT_FILES = %w[
+    vite.config.ts.tt
+    app/frontend/entrypoints/application.ts
+    app/frontend/entrypoints/styles.scss
+    bin/vite.tt
+  ].freeze
+
   FILES = %w[
     .eslintrc.json.tt
     package.json.tt
     tsconfig.json.tt
-    vite.config.ts.tt
-    app/frontend/entrypoints/application.ts
-    app/frontend/entrypoints/styles.scss
-  ].freeze
+  ].concat(ROOT_FILES).freeze
 
   def create_package
     return if behavior == :revoke
@@ -34,7 +38,25 @@ class ViteGenerator < Rails::Generators::Base
     cache_vite_ports
     formated_files = []
 
+    if options[:root].present?
+      ROOT_FILES.each do |file|
+        template(file, Rails.root.join(file.gsub('.tt', '')))
+      end
+
+      vite_json_path = Rails.root.join('config/vite.json')
+
+      unless File.exist?(vite_json_path)
+        template('vite.json.tt', vite_json_path)
+        cache_port
+      end
+    end
+
     packages.each do |package|
+      unless Dir.exist?("packages/#{package}")
+        puts "#{package} package is not existing"
+        next
+      end
+
       @package_name = package
 
       FILES.each do |file|
@@ -70,13 +92,23 @@ class ViteGenerator < Rails::Generators::Base
       formated_files.push(*file_names.values)
     end
 
-    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}")
+    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}") if formated_files.present?
   end
 
   def clean_package
     return if behavior == :invoke
 
     formated_files = []
+
+    if options[:root].present?
+      ROOT_FILES.each do |file|
+        template(file, Rails.root.join(file.gsub('.tt', '')))
+      end
+
+      vite_json_path = 'config/vite.json'
+      clean_cache_port(vite_json_path)
+      template('vite.json.tt', vite_json_path)
+    end
 
     packages.each do |package|
       @package_name = package
@@ -85,7 +117,9 @@ class ViteGenerator < Rails::Generators::Base
         template(file, "packages/#{package}/#{file.gsub('.tt', '')}")
       end
 
-      remove_file("packages/#{package}/config/vite.json")
+      vite_json_path = "packages/#{package}/config/vite.json"
+      clean_cache_port(vite_json_path)
+      template('vite.json.tt', vite_json_path)
 
       file_names = {
         package_engine: Rails.root.join("packages/#{package}/lib/#{package}/engine.rb"),
@@ -106,6 +140,6 @@ class ViteGenerator < Rails::Generators::Base
       formated_files.push(*file_names.values)
     end
 
-    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}")
+    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}") if formated_files.present?
   end
 end

@@ -2,6 +2,12 @@
 
 Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspaces to handle monorepo for JavaScript/TypeScript inside Rails app managed by `Vite`.
 
+**Notes**:
+
+- Even this boilerplate provides a way to integrate `vite` for root app, **DO NOT** use it
+
+- If you still wanna integrate `vite` for root app, you should check plugin config and make it works yourself
+
 # Project Structure
 
 ```sh
