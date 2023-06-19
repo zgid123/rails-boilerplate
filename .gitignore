@@ -24,5 +24,4 @@ node_modules
 # remove below for your project
 
 /db/migrate/*
-/db/seed/*
 /db/schema.rb

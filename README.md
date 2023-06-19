@@ -28,6 +28,27 @@ Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspace
   - core: contains all services/jobs/... for main app and plugins
   - auth: contains all services/jobs/... for authentication and/or authorization
 
+# Setup
+
+- Create `database.yml` for root project
+
+```sh
+cp config/database.yml.example config/database.yml
+```
+
+- Remove those blocks in `.gitignore`
+
+```
+/db/migrate/*
+/db/schema.rb
+```
+
+- Apply migrations for project
+
+```sh
+rake cli:db:migrate
+```
+
 # Run project
 
 - Start `vite` server for plugin before running `rails s`
