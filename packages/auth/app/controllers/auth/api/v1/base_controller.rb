@@ -4,7 +4,10 @@ module Auth
   module Api
     module V1
       class BaseController < ActionController::API
-        protect_from_forgery with: :null_session
+        include Auth::ApiHelper
+        include Core::Render
+
+        before_action :authenticate_user!
       end
     end
   end

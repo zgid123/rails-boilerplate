@@ -12,6 +12,10 @@ module Auth
 
         private
 
+        def require_no_authentication
+          request.session_options[:skip] = true
+        end
+
         def respond_with(resource, _opts = {})
           render_resource(resource, serializer: Auth::ProfileSerializer)
         end
