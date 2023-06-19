@@ -1,4 +1,10 @@
 PATH
+  remote: packages/admin
+  specs:
+    admin (0.1.0)
+      rails (~> 7.0.5)
+
+PATH
   remote: packages/auth
   specs:
     auth (0.1.0)
@@ -295,6 +301,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  admin!
   auth!
   bootsnap
   bullet

@@ -1,0 +1,35 @@
+<section class='space-y-10'>
+  <h1 class='text-4xl'>List Users</h1>
+  <table class='table-auto w-[100%]'>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Created at</th>
+        <th>Updated at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class='text-center'>
+          <td>
+            <%= user.id %>
+          </td>
+          <td>
+            <%= user.email %>
+          </td>
+          <td>
+            <%= user.roles.pluck(:name).join(', ') %>
+          </td>
+          <td>
+            <%= format_date(user.created_at) %>
+          </td>
+          <td>
+            <%= format_date(user.updated_at) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

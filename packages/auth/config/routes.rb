@@ -18,5 +18,7 @@ Auth::Engine.routes.draw do
 
   devise_for :users, path: :auth, class_name: 'Auth::User', only: %i[sessions]
 
-  resource :profile, controller: 'profile', only: %i[show]
+  scope 'auth' do
+    resource :profile, controller: 'profile', only: %i[show]
+  end
 end

@@ -44,6 +44,18 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(vite@4.3.9)
 
+  packages/admin:
+    devDependencies:
+      autoprefixer:
+        specifier: ^10.4.14
+        version: 10.4.14(postcss@8.4.24)
+      postcss:
+        specifier: ^8.4.24
+        version: 8.4.24
+      tailwindcss:
+        specifier: ^3.3.2
+        version: 3.3.2(ts-node@10.9.1)
+
   packages/auth:
     dependencies:
       '@rails/ujs':

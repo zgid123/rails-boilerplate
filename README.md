@@ -113,6 +113,4 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 [ ] Write cli to create migration for package instead of accessing and running rails migration
 
-[ ] Write generator for tailwindcss and windicss with `vite_rails`
-
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`

@@ -1,0 +1,14 @@
+{
+  "all": {
+    "sourceCodeDir": "app/frontend",
+    "publicOutputDir": "admin-vite",
+    "watchAdditionalPaths": []
+  },
+  "development": {
+    "autoBuild": true,
+    "port": 3204
+  },
+  "test": {
+    "autoBuild": true
+  }
+}

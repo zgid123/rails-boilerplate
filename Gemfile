@@ -40,3 +40,4 @@ gem 'pg'
 
 gem 'core', path: 'packages/core'
 gem 'auth', path: 'packages/auth'
+gem 'admin', path: 'packages/admin'
