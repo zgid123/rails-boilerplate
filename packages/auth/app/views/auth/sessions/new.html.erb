@@ -1,6 +1,6 @@
 <section class='flex flex-col w-[100%] h-[100%] items-center justify-center'>
   <div class='shadow-lg bg-white rounded-lg py-8 px-20'>
-    <%= form_for(resource, as: resource_name, url: auth_session_path, html: { class: 'space-y-5' }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_session_path, html: { class: 'space-y-5' }) do |f| %>
       <div class='field'>
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: 'email' %>

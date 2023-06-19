@@ -2,6 +2,7 @@
 
 require 'devise'
 require 'devise/jwt'
+require 'rolify'
 require 'vite_rails'
 
 module Auth

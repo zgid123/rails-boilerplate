@@ -6,7 +6,7 @@ module Auth
       class AuthController < Devise::SessionsController
         include ::Core::Render
 
-        protect_from_forgery with: :null_session
+        skip_before_action :verify_authenticity_token
 
         respond_to :json
 

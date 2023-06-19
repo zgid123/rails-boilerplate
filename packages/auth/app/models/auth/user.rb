@@ -4,6 +4,8 @@ module Auth
   class User < ApplicationRecord
     include Devise::JWT::RevocationStrategies::Allowlist
 
+    rolify role_cname: 'Auth::Role', role_table_name: Auth::Role.table_name
+
     devise(
       :database_authenticatable,
       :registerable,

@@ -5,6 +5,7 @@ PATH
       devise
       devise-jwt
       rails (>= 7.0.4.3)
+      rolify
       vite_rails
 
 PATH
@@ -14,6 +15,7 @@ PATH
       blueprinter
       dry-auto_inject
       dry-container
+      pagy
       rails (>= 7.0.4.3)
       yajl-ruby
 
@@ -161,6 +163,7 @@ GEM
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pagy (6.0.4)
     parallel (1.23.0)
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -216,6 +219,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
+    rolify (6.0.1)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)

@@ -5,6 +5,7 @@ PATH
       blueprinter
       dry-auto_inject
       dry-container
+      pagy
       rails (>= 7.0.4.3)
       yajl-ruby
 
@@ -15,6 +16,7 @@ PATH
       devise
       devise-jwt
       rails (>= 7.0.4.3)
+      rolify
       vite_rails
 
 GEM
@@ -143,6 +145,7 @@ GEM
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pagy (6.0.4)
     racc (1.7.1)
     rack (2.2.7)
     rack-proxy (0.7.6)
@@ -180,6 +183,7 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    rolify (6.0.1)
     thor (1.2.2)
     timeout (0.3.2)
     tzinfo (2.0.6)
