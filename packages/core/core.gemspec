@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'blueprinter'
   spec.add_dependency 'dry-auto_inject'
   spec.add_dependency 'dry-container'
+  spec.add_dependency 'pagy'
   spec.add_dependency 'rails', '>= 7.0.4.3'
   spec.add_dependency 'yajl-ruby'
 end

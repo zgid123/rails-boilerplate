@@ -5,6 +5,7 @@ PATH
       blueprinter
       dry-auto_inject
       dry-container
+      pagy
       rails (>= 7.0.4.3)
       yajl-ruby
 
@@ -118,6 +119,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
+    pagy (6.0.4)
     racc (1.7.1)
     rack (2.2.7)
     rack-test (2.1.0)
