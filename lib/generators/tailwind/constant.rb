@@ -8,10 +8,6 @@ module Constant
   ].freeze
 
   NPM_PACKAGES = %w[
-    @tailwindcss/aspect-ratio
-    @tailwindcss/container-queries
-    @tailwindcss/forms
-    @tailwindcss/typography
     autoprefixer
     postcss
     tailwindcss
