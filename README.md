@@ -65,43 +65,17 @@ pnpm --filter=<plugin package name> dev
 pnpm -w dev
 ```
 
-# Commands
+# Docs
 
-- Run all migrations from main app and all plugins
+- [rake tasks](docs/rake-tasks.md)
 
-```sh
-rake cli:db:migrate
-```
+- [create/remove package](docs/package.md)
 
-- Create package
+- [integrate vite](docs/vite.md)
 
-```sh
-rails g package <package_name>
-```
+- [integrate ujs](docs/ujs_utils.md)
 
-- Remove package
-
-```sh
-rails d package <package_name>
-```
-
-**Notice**: this will remove your folder entirely
-
-- Add vite for app
-
-```sh
-# multiple packages
-
-rails g vite --packages=package_1 package_2 ...
-
-# one package
-
-rails g vite package_1
-
-# root app
-
-rails g vite --root
-```
+- [integrate tailwind](docs/tailwind.md)
 
 # Env
 
@@ -116,3 +90,9 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 [ ] Write cli to create migration for package instead of accessing and running rails migration
 
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`
+
+[ ] Update generator `ujs-utils` to integrate `stimulus`, `turbolink` and/or `import_map`
+
+[ ] Update generator `package` to pass option `--rails-app` to create `controllers`, `helpers`, ...
+
+[ ] Make the `clean_content` method better
