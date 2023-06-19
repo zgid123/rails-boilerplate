@@ -1,0 +1,8 @@
+Description:
+  Integrate @rails/ujs and jquery/...
+
+Example:
+  bin/rails generate ujs_utils
+
+  This will create:
+    packages/package_1/*

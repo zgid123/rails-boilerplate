@@ -40,7 +40,8 @@ module ContentHelper
     return unless file_exist?(file, log:, template_path:, init:)
 
     resource, file_content = read_content(file)
-    return if content_exist?(file_content, content)
+    parsed_content = parse_content(content)
+    return if content_exist?(file_content, parsed_content)
 
     insert_index = 0
 
@@ -50,7 +51,7 @@ module ContentHelper
       insert_index += line.length
     end
 
-    resource.write(file_content.insert(insert_index, "#{content}\n"))
+    resource.write(file_content.insert(insert_index, "#{parsed_content}\n"))
   end
 
   def insert_at_specific_module(file:, content:, module_name:, type: :class, log: false, template_path: nil, init: false)
@@ -112,5 +113,9 @@ module ContentHelper
         ''
       )
     )
+  end
+
+  def parse_content(content)
+    content.is_a?(Array) ? content.join("\n") : content
   end
 end
