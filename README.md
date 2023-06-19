@@ -16,6 +16,7 @@ Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspace
   ├── config
   ├── lib
   └── packages
+      ├── admin
       ├── core
       └── auth
 ```
@@ -25,6 +26,7 @@ Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspace
 - config: like normal rails app
 - lib: like normal rails app
 - packages
+  - admin: contains all serviers/jobs/... for admin
   - core: contains all services/jobs/... for main app and plugins
   - auth: contains all services/jobs/... for authentication and/or authorization
 
