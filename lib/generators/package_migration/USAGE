@@ -1,0 +1,8 @@
+Description:
+  Generate migration for specific package
+
+Example:
+  bin/rails generate package_migration package_1 create_users
+
+  This will create:
+    packages/package_1/db/migrate/*

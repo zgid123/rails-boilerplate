@@ -77,6 +77,8 @@ pnpm -w dev
 
 - [integrate tailwind](docs/tailwind.md)
 
+- [create migration for package](docs/migration.md)
+
 # Env
 
 - If you wanna use credentials, use this command to edit
@@ -87,8 +89,6 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 # TODO
 
-[ ] Write cli to create migration for package instead of accessing and running rails migration
-
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`
 
 [ ] Update generator `ujs-utils` to integrate `stimulus`, `turbolink` and/or `import_map`
@@ -96,3 +96,7 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 [ ] Update generator `package` to pass option `--rails-app` to create `controllers`, `helpers`, ...
 
 [ ] Make the `clean_content` method better
+
+[ ] Create rake task to setup project
+
+[ ] Create configuration for auth package to config something related to devise like `after_sign_in_path_for`, `after_sign_out_path_for`, ... instead of hard coding the url inside `auth` package
