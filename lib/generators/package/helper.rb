@@ -45,23 +45,15 @@ module Helper
     @package_dir ||= Rails.root.join("packages/#{package_name}")
   end
 
-  def format_gemfile
-    system("bundle exec rubocop -f q -a #{gemfile_pathname}")
-  end
-
-  def install_npm_packages
-    system('pnpm install')
-  end
-
   def template_files
     copy_files = []
-    compile_files = [].concat(FILES)
+    compile_files = [].concat(PACKAGE_FILES)
 
-    compile_files.concat(API_FILES) if options['rails-api']
+    compile_files.concat(PACKAGE_API_FILES) if options['rails-api']
 
     if options['rails-app']
-      copy_files.concat(APP_COPY_FILES)
-      compile_files.concat(APP_FILES)
+      copy_files.concat(PACKAGE_APP_COPY_FILES)
+      compile_files.concat(PACKAGE_APP_FILES)
     end
 
     [copy_files, compile_files.uniq]

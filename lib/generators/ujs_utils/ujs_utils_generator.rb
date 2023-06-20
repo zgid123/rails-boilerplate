@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/cli_helper'
 require 'generator_helpers/file_helper'
 require 'generator_helpers/content_helper'
 require 'generator_helpers/package_helper'
@@ -8,6 +9,7 @@ require_relative './code_template'
 
 class UjsUtilsGenerator < Rails::Generators::Base
   include Helper
+  include CliHelper
   include FileHelper
   include CodeTemplate
   include PackageHelper
@@ -37,136 +39,91 @@ class UjsUtilsGenerator < Rails::Generators::Base
                type: :string,
                desc: 'Integrate turbo-rails'
 
-  def create_files
+  def generate_ujs_utils
     if options[:root].present?
-      setup_file = Rails.root.join('app/frontend/setup/index.ts')
-      application_ts_file = Rails.root.join('app/frontend/entrypoints/application.ts')
-      copy_tt_files(UJS_FILES, path: Rails.root)
-
-      if invoke_action?
-        insert_at_beginning_of_file(
-          file: setup_file,
-          content: init_ujs_import,
-          init: true
-        )
-
-        if jquery?
-          copy_tt_files(JQUERY_FILES, path: Rails.root)
-          insert_at_beginning_of_file(
-            file: setup_file,
-            content: init_jquery_import,
-            init: true
-          )
-        end
-
-        if stimulus?
-          copy_tt_files(STIMULUS_FILES, path: Rails.root)
-          insert_at_end_of_file(
-            file: application_ts_file,
-            content: controllers_import,
-            init: true
-          )
-        end
-
-        if turbo_rails?
-          copy_tt_files(TURBO_RAILS_FILES, path: Rails.root)
-          insert_at_end_of_file(
-            file: setup_file,
-            content: init_turbo_rails_import,
-            init: true
-          )
-        end
-      else
-        clean_content(file: setup_file, content: init_ujs_import)
-
-        if jquery?
-          copy_tt_files(JQUERY_FILES, path: Rails.root)
-          clean_content(file: setup_file, content: init_jquery_import)
-        end
-
-        if turbo_rails?
-          copy_tt_files(TURBO_RAILS_FILES, path: Rails.root)
-          clean_content(file: setup_file, content: init_turbo_rails_import)
-        end
-
-        if stimulus?
-          copy_tt_files(STIMULUS_FILES, path: Rails.root)
-          clean_content(file: application_ts_file, content: controllers_import)
-        end
-      end
-
-      system("pnpm -w #{npm_command} #{install_npm_packages_str}")
-      system("pnpm -w #{npm_command(is_dev: true)} #{install_npm_dev_packages_str}")
+      generate_content(Rails.root)
+      install_packages(true, [])
     end
 
-    installed_packages = []
+    existing_packages = []
 
     packages.each do |package|
       next unless package_exist?(package, log: true)
 
-      installed_packages << package
+      existing_packages << package
     end
 
-    return if installed_packages.blank?
+    return if existing_packages.blank?
 
-    installed_packages.each do |package|
-      system("pnpm --filter=#{package} #{npm_command} #{install_npm_packages_str}")
-      system("pnpm --filter=#{package} #{npm_command(is_dev: true)} #{install_npm_dev_packages_str}")
-      setup_file = Rails.root.join("packages/#{package}/app/frontend/setup/index.ts")
-      application_ts_file = Rails.root.join("packages/#{package}/app/frontend/entrypoints/application.ts")
-      copy_tt_files(UJS_FILES, path: "packages/#{package}")
+    existing_packages.each do |package|
+      generate_content("packages/#{package}")
+    end
 
-      if invoke_action?
+    install_packages(false, existing_packages)
+  end
+
+  private
+
+  def generate_content(path)
+    setup_file = "#{path}/app/frontend/setup/index.ts"
+    application_ts_file = "#{path}/app/frontend/entrypoints/application.ts"
+    copy_tt_files(UJS_UTILS_UJS_FILES, path:)
+
+    if invoke_action?
+      insert_at_beginning_of_file(
+        file: setup_file,
+        content: init_ujs_import,
+        init: true
+      )
+
+      if jquery?
+        copy_tt_files(UJS_UTILS_JQUERY_FILES, path:)
         insert_at_beginning_of_file(
           file: setup_file,
-          content: init_ujs_import,
+          content: init_jquery_import,
           init: true
         )
+      end
 
-        if jquery?
-          copy_tt_files(JQUERY_FILES, path: "packages/#{package}")
-          insert_at_beginning_of_file(
-            file: setup_file,
-            content: init_jquery_import,
-            init: true
-          )
-        end
+      if stimulus?
+        copy_tt_files(UJS_UTILS_STIMULUS_FILES, path:)
+        insert_at_end_of_file(
+          file: application_ts_file,
+          content: controllers_import,
+          init: true
+        )
+      end
 
-        if stimulus?
-          copy_tt_files(STIMULUS_FILES, path: "packages/#{package}")
-          insert_at_end_of_file(
-            file: application_ts_file,
-            content: controllers_import,
-            init: true
-          )
-        end
+      if turbo_rails?
+        copy_tt_files(UJS_UTILS_TURBO_RAILS_FILES, path:)
+        insert_at_end_of_file(
+          file: setup_file,
+          content: init_turbo_rails_import,
+          init: true
+        )
+      end
+    else
+      clean_content(file: setup_file, content: init_ujs_import)
 
-        if turbo_rails?
-          copy_tt_files(TURBO_RAILS_FILES, path: "packages/#{package}")
-          insert_at_end_of_file(
-            file: setup_file,
-            content: init_turbo_rails_import,
-            init: true
-          )
-        end
-      else
-        clean_content(file: setup_file, content: init_ujs_import)
+      if jquery?
+        copy_tt_files(UJS_UTILS_JQUERY_FILES, path:)
+        clean_content(file: setup_file, content: init_jquery_import)
+      end
 
-        if jquery?
-          copy_tt_files(JQUERY_FILES, path: "packages/#{package}")
-          clean_content(file: setup_file, content: init_jquery_import)
-        end
+      if turbo_rails?
+        copy_tt_files(UJS_UTILS_TURBO_RAILS_FILES, path:)
+        clean_content(file: setup_file, content: init_turbo_rails_import)
+      end
 
-        if turbo_rails?
-          copy_tt_files(TURBO_RAILS_FILES, path: "packages/#{package}")
-          clean_content(file: setup_file, content: init_turbo_rails_import)
-        end
-
-        if stimulus?
-          copy_tt_files(STIMULUS_FILES, path: "packages/#{package}")
-          clean_content(file: application_ts_file, content: controllers_import)
-        end
+      if stimulus?
+        copy_tt_files(UJS_UTILS_STIMULUS_FILES, path:)
+        clean_content(file: application_ts_file, content: controllers_import)
       end
     end
+  end
+
+  def install_packages(global, workspaces)
+    pnpm_add(install_npm_packages, behavior:, global:, workspaces:)
+    pnpm_add(install_npm_dev_packages, behavior:, is_dev: true, global:, workspaces:)
   end
 end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/cli_helper'
 require 'generator_helpers/file_helper'
 require 'generator_helpers/vite_helper'
 require 'generator_helpers/content_helper'
@@ -11,6 +12,7 @@ require_relative './code_template'
 class ViteGenerator < Rails::Generators::Base
   include Helper
   include Constant
+  include CliHelper
   include FileHelper
   include ViteHelper
   include CodeTemplate
@@ -29,27 +31,24 @@ class ViteGenerator < Rails::Generators::Base
                type: :string,
                desc: 'Integrate vite into root'
 
-  def create_package
+  def create_vite
     return if revoke_action?
 
     cache_vite_ports
     formated_files = []
 
-    if options[:root].present?
-      copy_tt_files(ROOT_FILES, path: Rails.root)
-      create_vite_json(Rails.root.join('config/vite.json'))
-    end
+    create_major_files(VITE_ROOT_FILES, path: Rails.root) if options[:root].present?
 
     packages.each do |package|
       next unless package_exist?(package, log: true)
 
       @package_name = package
-      copy_tt_files(FILES, path: "packages/#{package}")
-      create_vite_json("packages/#{package}/config/vite.json")
+      package_dir = "packages/#{package}"
+      create_major_files(VITE_FILES, path: package_dir)
 
       file_names = {
-        package_engine: Rails.root.join("packages/#{package}/lib/#{package}/engine.rb"),
-        application_helper: Rails.root.join("packages/#{package}/app/helpers/#{package}/application_helper.rb")
+        package_engine: Rails.root.join("#{package_dir}/lib/#{package}/engine.rb"),
+        application_helper: Rails.root.join("#{package_dir}/app/helpers/#{package}/application_helper.rb")
       }
 
       insert_at_specific_module(
@@ -72,7 +71,7 @@ class ViteGenerator < Rails::Generators::Base
         template_path: 'application_helper.rb.tt'
       )
       insert_at_end_of_html_tag(
-        file: "packages/#{package}/app/views/layouts/#{package}/application.html.erb",
+        file: "#{package_dir}/app/views/layouts/#{package}/application.html.erb",
         content: layout_code,
         tag: :head,
         template_path: 'application.html.erb.tt',
@@ -82,27 +81,24 @@ class ViteGenerator < Rails::Generators::Base
       formated_files.push(*file_names.values)
     end
 
-    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}") if formated_files.present?
+    rubocop_on(formated_files)
   end
 
-  def clean_package
+  def clean_vite
     return if invoke_action?
 
     formated_files = []
 
-    if options[:root].present?
-      copy_tt_files(ROOT_FILES, path: Rails.root)
-      create_vite_json(Rails.root.join('config/vite.json'), clean_port: true)
-    end
+    create_major_files(VITE_ROOT_FILES, path: Rails.root, clean_port: true) if options[:root].present?
 
     packages.each do |package|
       @package_name = package
-      copy_tt_files(FILES, path: "packages/#{package}")
-      create_vite_json("packages/#{package}/config/vite.json", clean_port: true)
+      package_dir = "packages/#{package}"
+      create_major_files(VITE_FILES, path: package_dir, clean_port: true)
 
       file_names = {
-        package_engine: Rails.root.join("packages/#{package}/lib/#{package}/engine.rb"),
-        application_helper: Rails.root.join("packages/#{package}/app/helpers/#{package}/application_helper.rb")
+        package_engine: Rails.root.join("#{package_dir}/lib/#{package}/engine.rb"),
+        application_helper: Rails.root.join("#{package_dir}/app/helpers/#{package}/application_helper.rb")
       }
 
       clean_content(file: file_names[:package_engine], content: engine_code)
@@ -112,13 +108,13 @@ class ViteGenerator < Rails::Generators::Base
         content: vite_manifest(camelized_package)
       )
       clean_content(
-        file: "packages/#{package}/app/views/layouts/#{package}/application.html.erb",
+        file: "#{package_dir}/app/views/layouts/#{package}/application.html.erb",
         content: layout_code
       )
 
       formated_files.push(*file_names.values)
     end
 
-    system("bundle exec rubocop -f q -a #{formated_files.join(' ')}") if formated_files.present?
+    rubocop_on(formated_files)
   end
 end

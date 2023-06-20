@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Constant
-  ROOT_FILES = %w[
+  VITE_ROOT_FILES = %w[
     vite.config.ts.tt
     app/frontend/entrypoints/application.ts.tt
     app/frontend/entrypoints/styles.scss.tt
@@ -10,9 +10,9 @@ module Constant
     bin/vite.tt
   ].freeze
 
-  FILES = %w[
+  VITE_FILES = %w[
     .eslintrc.json.tt
     package.json.tt
     tsconfig.json.tt
-  ].concat(ROOT_FILES).freeze
+  ].concat(VITE_ROOT_FILES).freeze
 end

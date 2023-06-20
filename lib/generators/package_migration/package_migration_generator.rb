@@ -9,23 +9,11 @@ class PackageMigrationGenerator < Rails::Generators::Base
 
   source_root File.expand_path('templates', __dir__)
 
-  def create_migration
-    return if revoke_action?
-
+  def generate_migration
     validate_params
 
     Dir.chdir(package_dir) do
-      Rails::Generators.invoke('migration', [migration_name])
-    end
-  end
-
-  def remove_migration
-    return if invoke_action?
-
-    validate_params
-
-    Dir.chdir(package_dir) do
-      Rails::Generators.invoke('migration', [migration_name], behavior: :revoke)
+      Rails::Generators.invoke('migration', [migration_name], behavior:)
     end
   end
 

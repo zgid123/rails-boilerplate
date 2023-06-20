@@ -34,6 +34,11 @@ module Helper
     template('vite.json.tt', file_path)
   end
 
+  def create_major_files(files, path:, clean_port: false)
+    copy_tt_files(files, path:)
+    create_vite_json("#{path}/config/vite.json", clean_port:)
+  end
+
   private
 
   def existing_ports

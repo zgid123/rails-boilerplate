@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/cli_helper'
 require 'generator_helpers/file_helper'
 require 'generator_helpers/content_helper'
 require 'generator_helpers/package_helper'
@@ -7,6 +8,7 @@ require_relative './helper'
 
 class PackageGenerator < Rails::Generators::Base
   include Helper
+  include CliHelper
   include FileHelper
   include ContentHelper
   include PackageHelper
@@ -28,8 +30,8 @@ class PackageGenerator < Rails::Generators::Base
     copy_tt_files(compile_files, path: package_dir)
     copy_tt_files(copy_files, path: package_dir, type: :copy)
     insert_at_end_of_file(file: gemfile_pathname, content: package_gem_import)
-    format_gemfile
-    install_npm_packages
+    rubocop_on(gemfile_pathname)
+    pnpm_install
   end
 
   def clean_package
@@ -41,7 +43,7 @@ class PackageGenerator < Rails::Generators::Base
     directory(package_dir) # for notification
     FileUtils.remove_dir(package_dir) # remove empty folder
     clean_content(file: gemfile_pathname, content: package_gem_import)
-    format_gemfile
-    install_npm_packages
+    rubocop_on(gemfile_pathname)
+    pnpm_install
   end
 end

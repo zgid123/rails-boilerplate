@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
+require 'generator_helpers/cli_helper'
 require 'generator_helpers/file_helper'
 require 'generator_helpers/content_helper'
 require 'generator_helpers/package_helper'
 require_relative './helper'
+require_relative './constant'
 require_relative './code_template'
 
 class TailwindGenerator < Rails::Generators::Base
   include Helper
+  include Constant
+  include CliHelper
   include FileHelper
   include CodeTemplate
   include ContentHelper
@@ -29,43 +33,42 @@ class TailwindGenerator < Rails::Generators::Base
                type: :string,
                desc: 'Skip initializing Vite'
 
-  def create_files
+  def generate_tailwind
     if options[:root].present?
-      copy_tt_files(FILES, path: Rails.root.to_s)
-      system("pnpm -w #{npm_command} #{install_npm_packages_str}")
+      generate_content(TAILWIND_FILES, Rails.root)
       invoke_vite(['--root'])
-      styles_path = Rails.root.join('app/frontend/entrypoints/styles.scss')
-
-      if invoke_action?
-        insert_at_beginning_of_file(file: styles_path, content: tailwind_import, init: true)
-      else
-        clean_content(file: styles_path, content: tailwind_import)
-      end
+      pnpm_add(TAILWIND_NPM_PACKAGES, behavior:, is_dev: true, global: true)
     end
 
-    installed_packages = []
+    existing_packages = []
 
     packages.each do |package|
       next unless package_exist?(package, log: true)
 
-      installed_packages << package
-      copy_tt_files(FILES, path: "packages/#{package}")
+      existing_packages << package
     end
 
-    return if installed_packages.blank?
+    return if existing_packages.blank?
 
-    first, *rest = installed_packages
+    first, *rest = existing_packages
     invoke_vite(["--packages=#{first}", *rest])
+    pnpm_add(TAILWIND_NPM_PACKAGES, behavior:, is_dev: true, workspaces: existing_packages)
 
-    installed_packages.each do |package|
-      system("pnpm --filter=#{package} #{npm_command} #{install_npm_packages_str}")
-      styles_path = "packages/#{package}/app/frontend/entrypoints/styles.scss"
+    existing_packages.each do |package|
+      generate_content(TAILWIND_FILES, "packages/#{package}")
+    end
+  end
 
-      if invoke_action?
-        insert_at_beginning_of_file(file: styles_path, content: tailwind_import, init: true)
-      else
-        clean_content(file: styles_path, content: tailwind_import)
-      end
+  private
+
+  def generate_content(files, path)
+    copy_tt_files(files, path:)
+    styles_path = "#{path}/app/frontend/entrypoints/styles.scss"
+
+    if invoke_action?
+      insert_at_beginning_of_file(file: styles_path, content: tailwind_import, init: true)
+    else
+      clean_content(file: styles_path, content: tailwind_import)
     end
   end
 end

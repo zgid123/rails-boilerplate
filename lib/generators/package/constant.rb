@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Constant
-  FILES = %w[
+  PACKAGE_FILES = %w[
     %package_name%.gemspec.tt
     Rakefile.tt
     Gemfile.tt
@@ -11,18 +11,18 @@ module Constant
     bin/rails.tt
   ].freeze
 
-  API_FILES = %w[
+  PACKAGE_API_FILES = %w[
     app/controllers/%package_name%/api/base_controller.rb.tt
     config/routes.rb.tt
   ].freeze
 
-  APP_FILES = %w[
+  PACKAGE_APP_FILES = %w[
     app/controllers/%package_name%/application_controller.rb.tt
     app/helpers/%package_name%/application_helper.rb.tt
     config/routes.rb.tt
   ].freeze
 
-  APP_COPY_FILES = %w[
+  PACKAGE_APP_COPY_FILES = %w[
     app/views/layouts/%package_name%/application.html.erb.tt
   ].freeze
 end
