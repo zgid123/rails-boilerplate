@@ -2,11 +2,29 @@ This boilerplate has a generator to generate a `package` (rails engine) into fol
 
 # Usage
 
+- Create package acts as library
+
 ```sh
 rails g package package_1
 ```
 
-This will create `packages/package_1` with minimal config.
+- Create package with api controller
+
+```sh
+rails g package package_1 --rails-api
+```
+
+- Create package with normal controller
+
+```sh
+rails g package package_1 --rails-app
+```
+
+- Create package with both controllers
+
+```sh
+rails g package package_1 --rails-app --rails-api
+```
 
 # Remove package
 

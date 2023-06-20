@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 require 'generator_helpers/env_helper'
+require_relative './constant'
 
 module Helper
   include ActiveSupport::Concern
+  include Constant
   include EnvHelper
 
   def package_name
@@ -45,5 +47,23 @@ module Helper
 
   def format_gemfile
     system("bundle exec rubocop -f q -a #{gemfile_pathname}")
+  end
+
+  def install_npm_packages
+    system('pnpm install')
+  end
+
+  def template_files
+    copy_files = []
+    compile_files = [].concat(FILES)
+
+    compile_files.concat(API_FILES) if options['rails-api']
+
+    if options['rails-app']
+      copy_files.concat(APP_COPY_FILES)
+      compile_files.concat(APP_FILES)
+    end
+
+    [copy_files, compile_files.uniq]
   end
 end

@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+module <%= camelized_package %>
+  module Api
+    class BaseController < ::Core::ApiController
+    end
+  end
+end

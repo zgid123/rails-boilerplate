@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+<%= camelized_package %>::Engine.routes.draw do
+end

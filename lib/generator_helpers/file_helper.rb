@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module FileHelper
-  def copy_tt_files(files, path:)
+  def copy_tt_files(files, path:, type: :compile)
     files.each do |file|
-      template(file, "#{path}/#{file.gsub('.tt', '')}")
+      template(file, "#{path}/#{file.gsub('.tt', '')}") if type == :compile
+      copy_file(file, "#{path}/#{file.gsub('.tt', '')}") if type == :copy
     end
   end
 

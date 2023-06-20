@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+module <%= camelized_package %>
+  module ApplicationHelper
+  end
+end

@@ -93,8 +93,6 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 [ ] Update generator `ujs-utils` to integrate `stimulus`, `turbolink` and/or `import_map`
 
-[ ] Update generator `package` to pass option `--rails-app` to create `controllers`, `helpers`, ...
-
 [ ] Make the `clean_content` method better
 
 [ ] Create rake task to setup project
