@@ -91,10 +91,12 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`
 
-[ ] Update generator `ujs-utils` to integrate `stimulus`, `turbolink` and/or `import_map`
-
 [ ] Make the `clean_content` method better
 
 [ ] Create rake task to setup project
 
 [ ] Create configuration for auth package to config something related to devise like `after_sign_in_path_for`, `after_sign_out_path_for`, ... instead of hard coding the url inside `auth` package
+
+[ ] Integrate `rbs` - may be in different repo
+
+[ ] Add `rspec` to do unit test

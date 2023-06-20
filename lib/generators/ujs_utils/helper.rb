@@ -21,10 +21,36 @@ module Helper
   end
 
   def install_npm_packages_str
-    @install_npm_packages_str ||= NPM_PACKAGES.join(' ')
+    return @install_npm_packages_str if @install_npm_packages_str.present?
+
+    @install_npm_packages_str = [].concat(NPM_PACKAGES)
+
+    @install_npm_packages_str.concat(STIMULUS_PACKAGES) if stimulus?
+    @install_npm_packages_str.concat(JQUERY_PACKAGES) if jquery?
+    @install_npm_packages_str.concat(TURBO_RAILS_PACKAGES) if turbo_rails?
+
+    @install_npm_packages_str = @install_npm_packages_str.join(' ')
   end
 
   def install_npm_dev_packages_str
-    @install_npm_dev_packages_str ||= NPM_DEV_PACKAGES.join(' ')
+    return @install_npm_dev_packages_str if @install_npm_dev_packages_str.present?
+
+    @install_npm_dev_packages_str = [].concat(NPM_DEV_PACKAGES)
+
+    @install_npm_dev_packages_str.concat(JQUERY_DEV_PACKAGES) if jquery?
+
+    @install_npm_dev_packages_str = @install_npm_dev_packages_str.join(' ')
+  end
+
+  def jquery?
+    @jquery ||= options[:jquery].present?
+  end
+
+  def stimulus?
+    @stimulus ||= options[:stimulus].present?
+  end
+
+  def turbo_rails?
+    @turbo_rails ||= options[:turbo_rails].present?
   end
 end

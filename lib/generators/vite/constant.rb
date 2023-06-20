@@ -3,8 +3,10 @@
 module Constant
   ROOT_FILES = %w[
     vite.config.ts.tt
-    app/frontend/entrypoints/application.ts
-    app/frontend/entrypoints/styles.scss
+    app/frontend/entrypoints/application.ts.tt
+    app/frontend/entrypoints/styles.scss.tt
+    app/frontend/setup/index.ts.tt
+    types/vite-env.d.ts.tt
     bin/vite.tt
   ].freeze
 

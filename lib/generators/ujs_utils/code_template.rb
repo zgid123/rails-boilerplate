@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
 module CodeTemplate
-  def rails_ujs_import
-    "import Rails from '@rails/ujs';"
+  def init_jquery_import
+    "import './init_jquery';\n"
   end
 
-  def jquery_import
-    "import 'jquery';"
+  def init_ujs_import
+    "import './init_ujs';\n"
   end
 
-  def command_import
-    'Rails.start();'
+  def init_turbo_rails_import
+    "import './init_turbo_rails';\n"
+  end
+
+  def controllers_import
+    "import '~/controllers';"
   end
 end
