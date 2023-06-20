@@ -86,11 +86,22 @@ class UjsUtilsGenerator < Rails::Generators::Base
       end
 
       if stimulus?
+        vite_config_file = "#{path}/vite.config.ts"
+
         copy_tt_files(UJS_UTILS_STIMULUS_FILES, path:)
         insert_at_end_of_file(
           file: application_ts_file,
           content: controllers_import,
           init: true
+        )
+        insert_at_beginning_of_file(
+          file: vite_config_file,
+          content: stimulus_hmr_import
+        )
+        insert_at_specific_file_content(
+          file: vite_config_file,
+          spec: 'plugins: [',
+          content: stimulus_plugins
         )
       end
 

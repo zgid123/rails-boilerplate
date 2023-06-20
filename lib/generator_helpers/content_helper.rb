@@ -103,6 +103,16 @@ module ContentHelper
     resource.write(file_content.insert(insert_index, "\n#{content}\n"))
   end
 
+  def insert_at_specific_file_content(file:, spec:, content:, log: false, template_path: nil, init: false)
+    return unless file_exist?(file, log:, template_path:, init:)
+
+    resource, file_content = read_content(file)
+    return if content_exist?(file_content, content)
+
+    insert_index = file_content.index(spec) + spec.length
+    resource.write(file_content.insert(insert_index, content))
+  end
+
   def clean_content(file:, content:, log: false)
     return unless file_exist?(file, log:)
 

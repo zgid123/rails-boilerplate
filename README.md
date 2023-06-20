@@ -100,3 +100,5 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 [ ] Integrate `rbs` - may be in different repo
 
 [ ] Add `rspec` to do unit test
+
+[ ] Write format methods for sass/ts/erb

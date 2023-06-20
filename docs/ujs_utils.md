@@ -22,6 +22,24 @@ rails g ujs_utils --packages=package_1 package_2 package_3 ...
 rails g ujs_utils --root --packages=package_1 package_2 package_3 ...
 ```
 
+- Integrate along with `jquery`
+
+```sh
+rails g ujs_utils --packages=package_1 --jquery
+```
+
+- Integrate along with `stimulus`
+
+```sh
+rails g ujs_utils --packages=package_1 --stimulus
+```
+
+- Integrate along with `turbo-rails`
+
+```sh
+rails g ujs_utils --packages=package_1 --turbo-rails
+```
+
 # Remove integration
 
 - Remove integration for root app

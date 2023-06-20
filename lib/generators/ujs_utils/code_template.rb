@@ -16,4 +16,12 @@ module CodeTemplate
   def controllers_import
     "import '~/controllers';"
   end
+
+  def stimulus_hmr_import
+    "import StimulusHMR from 'vite-plugin-stimulus-hmr';"
+  end
+
+  def stimulus_plugins
+    'StimulusHMR(),'
+  end
 end
