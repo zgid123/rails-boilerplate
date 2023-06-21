@@ -3,11 +3,7 @@
 module Auth
   module Api
     module V1
-      class BaseController < ActionController::API
-        include Auth::ApiHelper
-        include Core::Render
-
-        before_action :authenticate_user!
+      class BaseController < Auth::Api::BaseController
       end
     end
   end
