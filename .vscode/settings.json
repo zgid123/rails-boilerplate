@@ -15,5 +15,19 @@
   "clang-format.style": "{ IndentWidth: 2, BasedOnStyle: google, AlignConsecutiveAssignments: true }",
   "[gemfile]": {
     "editor.defaultFormatter": "rebornix.ruby"
+  },
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true
+    }
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "rebornix.ruby"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "aliariff.vscode-erb-beautify"
   }
 }
