@@ -66,7 +66,7 @@ module Core
     def handle_namespace(resource_class, opts)
       module_names = if opts[:module].present?
                        (opts[:module].is_a?(Array) ? opts[:module] : [opts[:module]]).map do |module_name|
-                         module_name.to_s.capitalize
+                         module_name.to_s.camelcase
                        end
                      else
                        []

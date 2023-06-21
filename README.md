@@ -67,6 +67,8 @@ pnpm -w dev
 
 # Docs
 
+- [boilerplate's usage](docs/usage.md)
+
 - [rake tasks](docs/rake-tasks.md)
 
 - [create/remove package](docs/package.md)
