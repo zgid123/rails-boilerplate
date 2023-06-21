@@ -12,4 +12,11 @@ module Constant
     postcss
     tailwindcss
   ].freeze
+
+  TAILWIND_GLOBAL_FILES = %w[
+    global.scss.tt
+    tailwind_base.scss.tt
+    tailwind_utilities.scss.tt
+    tailwind_components.scss.tt
+  ].freeze
 end

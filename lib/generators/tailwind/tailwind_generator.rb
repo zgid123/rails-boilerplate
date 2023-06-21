@@ -57,18 +57,46 @@ class TailwindGenerator < Rails::Generators::Base
     existing_packages.each do |package|
       generate_content(TAILWIND_FILES, "packages/#{package}")
     end
+
+    generate_global_styles
   end
 
   private
 
   def generate_content(files, path)
     copy_tt_files(files, path:)
+    vite_config_file = "#{path}/vite.config.ts"
     styles_path = "#{path}/app/frontend/entrypoints/styles.scss"
 
     if invoke_action?
       insert_at_beginning_of_file(file: styles_path, content: tailwind_import, init: true)
+      insert_at_beginning_of_file(file: vite_config_file, content: join_path_import)
+      insert_at_beginning_of_file(
+        file: vite_config_file,
+        content: package_dir_const,
+        custom_magic_regex: /^import/
+      )
+      insert_at_specific_file_content(
+        file: vite_config_file,
+        spec: 'allow: [',
+        content: server_fs_allow
+      )
+      insert_at_specific_file_content(
+        file: vite_config_file,
+        spec: 'alias: {',
+        content: resolve_alias
+      )
     else
       clean_content(file: styles_path, content: tailwind_import)
+      clean_content(file: vite_config_file, content: package_dir_const)
+      clean_content(file: vite_config_file, content: resolve_alias)
+      clean_content(file: vite_config_file, content: server_fs_allow)
     end
+  end
+
+  def generate_global_styles
+    return if package_exist?('tailwind_ui')
+
+    copy_tt_files(TAILWIND_GLOBAL_FILES, path: 'packages/tailwind_ui')
   end
 end

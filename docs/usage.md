@@ -96,3 +96,9 @@ Options detail:
 - `root`: the key of the response with value is the serialized resource(s) - default `:data`
 - `module`: a namespace or array of namespaces that the serializer class is belonged to - example `%i[admin provider]` will get `Admin::Provider::UserSerializer`
 - `keep_namespace`: in case your model is in a namespace - example Auth::User, the class name will be `Auth::User` and you want to keep `Auth::`, set this by true
+
+## Tailwind UI
+
+Whenever tailwind is integrated for first time, an package (not acts as engine or gem) `tailwind_ui` will be created and contains all the global style files.
+
+Those file are for creating typography, components, ... for all engines. If you have a component's style that share across the engines, implement it at `packages/tailwind_ui/tailwind_components.scss`.

@@ -36,7 +36,7 @@ module ContentHelper
     resource.write("\n#{content}\n", mode: 'a')
   end
 
-  def insert_at_beginning_of_file(file:, content:, log: false, template_path: nil, init: false)
+  def insert_at_beginning_of_file(file:, content:, log: false, template_path: nil, init: false, custom_magic_regex: nil)
     return unless file_exist?(file, log:, template_path:, init:)
 
     resource, file_content = read_content(file)
@@ -46,7 +46,7 @@ module ContentHelper
     insert_index = 0
 
     file_content.each_line do |line|
-      break unless MAGIC_COMMENT_REGEX.match?(line)
+      break unless (custom_magic_regex.presence || MAGIC_COMMENT_REGEX).match?(line)
 
       insert_index += line.length
     end
