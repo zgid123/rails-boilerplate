@@ -32,6 +32,14 @@ Boilerplate for Ruby on Rails using Modular architecture. Using `PnPM` workspace
 
 # Setup
 
+Run rake `cli:setup` to setup the project
+
+```sh
+rake cli:setup
+```
+
+Or you can do it manually by following those steps below:
+
 - Create `database.yml` for root project
 
 ```sh
@@ -94,8 +102,6 @@ EDITOR=vi rails credentials:edit --environment production|staging|development|te
 [ ] Write cli to run `rails s` with `bin/vite dev` from plugins that use `vite_rails`
 
 [ ] Make the `clean_content` method better
-
-[ ] Create rake task to setup project
 
 [ ] Create configuration for auth package to config something related to devise like `after_sign_in_path_for`, `after_sign_out_path_for`, ... instead of hard coding the url inside `auth` package
 
